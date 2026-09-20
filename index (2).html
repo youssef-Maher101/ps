@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>أسبوع الانطلاقة — Problem Solving Sprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F7F6FA;
+    --surface: #FFFFFF;
+    --surface-2: #F0EEF7;
+    --line: #E1DEEC;
+    --text: #1B1730;
+    --text-muted: #635D7A;
+    --accent: #0E9C82;
+    --accent-2: #B8860B;
+    --accent-soft: #E4F5F1;
+    --accent2-soft: #FBF1DC;
+    --chip-bg: #1B1730;
+    --chip-text: #F7F6FA;
+    --shadow: 0 1px 2px rgba(27,23,48,0.04), 0 8px 24px rgba(27,23,48,0.06);
+    --easy: #0E9C82;
+    --easy-soft: #E4F5F1;
+    --medium: #B8860B;
+    --medium-soft: #FBF1DC;
+    --hard: #C4453A;
+    --hard-soft: #FBE7E4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #100E1B;
+      --surface: #17142A;
+      --surface-2: #1D1A33;
+      --line: #2C2745;
+      --text: #EEECF7;
+      --text-muted: #9C96B8;
+      --accent: #2FD9B8;
+      --accent-2: #F0BB53;
+      --accent-soft: #17332E;
+      --accent2-soft: #332B14;
+      --chip-bg: #2FD9B8;
+      --chip-text: #0D1F1B;
+      --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 12px 32px rgba(0,0,0,0.35);
+      --easy: #2FD9B8;
+      --easy-soft: #17332E;
+      --medium: #F0BB53;
+      --medium-soft: #332B14;
+      --hard: #FF7A6E;
+      --hard-soft: #3A1D1A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #100E1B;
+    --surface: #17142A;
+    --surface-2: #1D1A33;
+    --line: #2C2745;
+    --text: #EEECF7;
+    --text-muted: #9C96B8;
+    --accent: #2FD9B8;
+    --accent-2: #F0BB53;
+    --accent-soft: #17332E;
+    --accent2-soft: #332B14;
+    --chip-bg: #2FD9B8;
+    --chip-text: #0D1F1B;
+    --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 12px 32px rgba(0,0,0,0.35);
+    --easy: #2FD9B8;
+    --easy-soft: #17332E;
+    --medium: #F0BB53;
+    --medium-soft: #332B14;
+    --hard: #FF7A6E;
+    --hard-soft: #3A1D1A;
+  }
+
+  * { box-sizing: border-box; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px));
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+    line-height: 1.7;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; direction: ltr; unicode-bidi: isolate; }
+
+  /* ---------- Top nav ---------- */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .topbar-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+  .brand .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex: none; }
+  .navlinks {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .navlinks::-webkit-scrollbar { display: none; }
+  .navlinks a {
+    font-family: 'JetBrains Mono', monospace;
+    direction: ltr;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 7px 10px;
+    border-radius: 7px;
+    white-space: nowrap;
+    transition: color .15s, background .15s;
+  }
+  .navlinks a:hover { color: var(--text); background: var(--surface-2); }
+
+  /* ---------- Layout ---------- */
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 64px 0; }
+  section + section { border-top: 1px solid var(--line); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 56px 0 48px; }
+  .eyebrow-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    direction: ltr;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    padding: 5px 10px;
+    border-radius: 999px;
+  }
+  h1 {
+    font-size: clamp(34px, 6vw, 54px);
+    line-height: 1.15;
+    font-weight: 700;
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+  }
+  h1 span { color: var(--accent); }
+  .hero p.lede {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 60ch;
+    margin: 0 0 34px;
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .stat {
+    background: var(--surface);
+    padding: 18px 16px;
+    text-align: center;
+  }
+  .stat b {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    direction: ltr;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat span { font-size: 12.5px; color: var(--text-muted); }
+
+  /* ---------- Section headers ---------- */
+  .sec-head { margin-bottom: 32px; }
+  .sec-head .tag {
+    font-family: 'JetBrains Mono', monospace;
+    direction: ltr;
+    font-size: 12px;
+    color: var(--accent-2);
+    font-weight: 600;
+  }
+  .sec-head h2 {
+    font-size: 28px;
+    margin: 8px 0 6px;
+    font-weight: 700;
+  }
+  .sec-head p { color: var(--text-muted); margin: 0; max-width: 62ch; }
+
+  /* ---------- Rules grid ---------- */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .rule-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .rule-card .num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .rule-card h3 { margin: 0 0 6px; font-size: 15.5px; }
+  .rule-card p { margin: 0; font-size: 13.5px; color: var(--text-muted); }
+
+  /* ---------- Timeline ---------- */
+  .timeline { position: relative; }
+  .day {
+    position: relative;
+    padding-inline-start: 34px;
+    border-inline-start: 2px solid var(--line);
+    padding-bottom: 46px;
+  }
+  .day:last-child { border-color: transparent; padding-bottom: 4px; }
+  .day::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: -7px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+  }
+  .day-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 26px 26px 22px;
+    box-shadow: var(--shadow);
+    scroll-margin-top: 90px;
+  }
+  .day-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .day-chip {
+    font-family: 'JetBrains Mono', monospace;
+    direction: ltr;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--chip-text);
+    background: var(--chip-bg);
+    padding: 4px 9px;
+    border-radius: 6px;
+  }
+  .day-head h3 { margin: 0; font-size: 21px; font-weight: 700; }
+  .day-focus { color: var(--text-muted); font-size: 14.5px; margin: 4px 0 18px; }
+
+  .theory-box {
+    background: var(--surface-2);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+  }
+  .theory-box .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-2);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .theory-box ul { margin: 0; padding-inline-start: 20px; }
+  .theory-box li { font-size: 14px; margin-bottom: 4px; }
+
+  .tracks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .track {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .track.beg { background: color-mix(in srgb, var(--accent-soft) 55%, transparent); }
+  .track.mid { background: color-mix(in srgb, var(--accent2-soft) 55%, transparent); }
+  .track .lvl {
+    font-size: 12.5px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .track.beg .lvl { color: var(--accent); }
+  .track.mid .lvl { color: var(--accent-2); }
+  .track .lvl::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .track ul { margin: 0; padding-inline-start: 18px; }
+  .track li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+
+  .day-foot {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .day-foot b { color: var(--text); font-weight: 600; }
+
+  .diff-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .total-badge {
+    font-family: 'JetBrains Mono', monospace;
+    direction: ltr;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    padding: 5px 11px;
+    border-radius: 999px;
+  }
+  .diff-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .diff-chip {
+    border-radius: 12px;
+    padding: 14px 14px;
+    border: 1px solid var(--line);
+    text-align: center;
+  }
+  .diff-chip .n {
+    font-family: 'JetBrains Mono', monospace;
+    direction: ltr;
+    font-size: 24px;
+    font-weight: 700;
+    display: block;
+    line-height: 1.2;
+  }
+  .diff-chip .lbl2 {
+    font-size: 12.5px;
+    font-weight: 600;
+    margin-top: 2px;
+    display: block;
+  }
+  .diff-chip.easy { background: var(--easy-soft); }
+  .diff-chip.easy .n, .diff-chip.easy .lbl2 { color: var(--easy); }
+  .diff-chip.medium { background: var(--medium-soft); }
+  .diff-chip.medium .n, .diff-chip.medium .lbl2 { color: var(--medium); }
+  .diff-chip.hard { background: var(--hard-soft); }
+  .diff-chip.hard .n, .diff-chip.hard .lbl2 { color: var(--hard); }
+
+  .links-box {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line);
+  }
+  .links-box > .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-2);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .playlist-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .playlist-row .ic { font-size: 15px; flex: none; }
+  .playlist-row .q { font-size: 13px; color: var(--text-muted); flex: none; white-space: nowrap; }
+  .link-slot {
+    flex: 1;
+    min-width: 0;
+    border-bottom: 1px dashed var(--line);
+    color: var(--text-muted);
+    font-size: 12.5px;
+    font-family: 'JetBrains Mono', monospace;
+    direction: ltr;
+    text-align: right;
+    padding: 3px 2px;
+  }
+  .link-groups {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .link-group h4 {
+    margin: 0 0 9px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .link-group.easy h4 { color: var(--easy); }
+  .link-group.medium h4 { color: var(--medium); }
+  .link-group.hard h4 { color: var(--hard); }
+  .link-group ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .link-group li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .link-group li .q {
+    font-size: 12px;
+    color: var(--text-muted);
+    flex: none;
+    width: 20px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ---------- Resources ---------- */
+  .res-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .res-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+  }
+  .res-card .name {
+    font-family: 'JetBrains Mono', monospace;
+    direction: ltr;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .res-card p { margin: 0; font-size: 13.5px; color: var(--text-muted); }
+
+  /* ---------- Closing ---------- */
+  .closing {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 40px 36px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .closing h2 { font-size: 24px; margin: 0 0 10px; }
+  .closing p { color: var(--text-muted); margin: 0 auto; max-width: 55ch; }
+
+  footer {
+    padding: 30px 0 calc(30px + env(safe-area-inset-bottom, 0px));
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12.5px;
+  }
+
+  @media (max-width: 720px) {
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
+    .rules-grid { grid-template-columns: 1fr; }
+    .tracks { grid-template-columns: 1fr; }
+    .res-grid { grid-template-columns: 1fr; }
+    .link-groups { grid-template-columns: 1fr; }
+    section { padding: 44px 0; }
+    .day-card { padding: 20px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="dot"></span> Sprint Roadmap</div>
+    <nav class="navlinks">
+      <a href="#rules">Rules</a>
+      <a href="#day1">D1</a><a href="#day2">D2</a><a href="#day3">D3</a>
+      <a href="#day4">D4</a><a href="#day5">D5</a><a href="#day6">D6</a>
+      <a href="#resources">Resources</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow-row">
+      <span class="badge">problem-solving/sprint-01</span>
+    </div>
+    <h1>أسبوع الانطلاقة<br><span>مراجعة الأساسيات + Problem Solving</span></h1>
+    <p class="lede">
+      خطة مكثفة لستة أيام لكل أعضاء التيم مهما كان مستواهم، كل يوم مخصص لتوبيك واحد بس في أساسيات
+      البرمجة، وبيتحل فيه عدد مسائل ثابت مقسّم بالصعوبة (سهل / متوسط / صعب) عشان الكل يتحدى نفسه
+      على قد مستواه من غير ما يشتت التركيز بين أكتر من فكرة في نفس اليوم.
+    </p>
+    <div class="stat-row">
+      <div class="stat"><b>6</b><span>أيام / توبيكات</span></div>
+      <div class="stat"><b>54</b><span>مسألة إجمالًا</span></div>
+      <div class="stat"><b>3</b><span>مستويات صعوبة</span></div>
+      <div class="stat"><b>1</b><span>توبيك واحد باليوم</span></div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <div class="sec-head">
+      <span class="tag">ground-rules</span>
+      <h2>قواعد الأسبوع</h2>
+      <p>الأسبوع ده تجربة جماعية مش مجرد مذاكرة فردية، عشان كده متفقين على شكل موحّد نمشي عليه كلنا.</p>
+    </div>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <span class="num">01</span>
+        <h3>حل واحد يوميًا بالحد الأدنى</h3>
+        <p>حتى لو الوقت ضيق، حل مسألة واحدة كل يوم من المسار بتاعك أهم من إنك تأجل وتحاول تعوّض آخر الأسبوع.</p>
+      </div>
+      <div class="rule-card">
+        <span class="num">02</span>
+        <h3>الحلول في قناة مشتركة</h3>
+        <p>كل واحد يرفع الكود بتاعه (حتى لو مش شغال) في قناة التيم، عشان نقدر نراجع لبعض ونتعلم من طريقة تفكير بعض.</p>
+      </div>
+      <div class="rule-card">
+        <span class="num">03</span>
+        <h3>جرّب لوحدك الأول</h3>
+        <p>اديلك نفسك 20-30 دقيقة تفكير حر قبل ما تدور على حل أو تسأل حد، ده جزء أساسي من التدريب مش تفصيلة صغيرة.</p>
+      </div>
+      <div class="rule-card">
+        <span class="num">04</span>
+        <h3>الأولوية للفهم مش للحل</h3>
+        <p>لو وصلت لحل، اسأل نفسك "ليه اتحل كده؟" قبل ما تنتقل للمسألة الجاية. الهدف مش عدد المسائل، الهدف طريقة التفكير.</p>
+      </div>
+      <div class="rule-card">
+        <span class="num">05</span>
+        <h3>الصعوبة مؤشر مش سقف</h3>
+        <p>لو خلّصت السهل والمتوسط بسرعة، اتحدى نفسك بالصعب فورًا. ولو المتوسط مستني وقت أطول، ده طبيعي.</p>
+      </div>
+      <div class="rule-card">
+        <span class="num">06</span>
+        <h3>تشيك-إن يومي قصير</h3>
+        <p>رسالة سطرين في نهاية اليوم: إيه اللي اتعلمته وإيه اللي واجهك. بيساعدنا نظبط الأيام الجاية على أساسه.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="timeline">
+    <div class="sec-head">
+      <span class="tag">the-week</span>
+      <h2>خطة الأيام الستة</h2>
+      <p>كل يوم توبيك واحد وعدد مسائل ثابت مقسّم بالصعوبة. اتحرك بالترتيب، وابدأ بالسهل قبل المتوسط والصعب في كل يوم.</p>
+    </div>
+
+    <div class="timeline">
+
+      <!-- DAY 1 -->
+      <div class="day" id="day1">
+        <div class="day-card">
+          <div class="day-head">
+            <span class="day-chip">DAY 01</span>
+            <h3>Data Types</h3>
+          </div>
+          <p class="day-focus">هدف اليوم: تتعامل صح مع أنواع البيانات المختلفة وتعرف تفرق بينهم من أول نظرة.</p>
+          <div class="theory-box">
+            <span class="lbl">مراجعة نظرية</span>
+            <ul>
+              <li>الأنواع الأساسية: Integer, Float, String, Boolean</li>
+              <li>التحويل بين الأنواع (Type Casting) ومتى بيحصل تلقائي ومتى محتاج تعمله يدوي</li>
+              <li>أخطاء شائعة بسبب خلط الأنواع (زي جمع رقم مع نص)</li>
+            </ul>
+          </div>
+          <div class="diff-head">
+            <span class="total-badge">10 مسائل</span>
+          </div>
+          <div class="diff-row">
+            <div class="diff-chip easy"><span class="n">5</span><span class="lbl2">سهل</span></div>
+            <div class="diff-chip medium"><span class="n">3</span><span class="lbl2">متوسط</span></div>
+            <div class="diff-chip hard"><span class="n">2</span><span class="lbl2">صعب</span></div>
+          </div>
+          <div class="day-foot">
+            <span>الترتيب المقترح: <b>ابدأ بالسهل، وخلّي الصعب آخر حاجة</b></span>
+            <span>الناتج المطلوب: <b>10/10 محلولة + سطرين تشيك-إن</b></span>
+          </div>
+          <div class="links-box">
+            <span class="lbl">روابط اليوم</span>
+            <div class="playlist-row">
+              <span class="ic">🎥</span>
+              <span class="q">بلايليست مراجعة اليوم:</span>
+              <span class="link-slot">ألصق لينك البلايليست هنا</span>
+            </div>
+            <div class="link-groups">
+            <div class="link-group easy">
+              <h4>سهل</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">3</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">4</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">5</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            <div class="link-group medium">
+              <h4>متوسط</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">3</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            <div class="link-group hard">
+              <h4>صعب</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 2 -->
+      <div class="day" id="day2">
+        <div class="day-card">
+          <div class="day-head">
+            <span class="day-chip">DAY 02</span>
+            <h3>If Statements</h3>
+          </div>
+          <p class="day-focus">هدف اليوم: تبني شروط واضحة وتتعامل مع أكتر من حالة في نفس المسألة من غير تعقيد.</p>
+          <div class="theory-box">
+            <span class="lbl">مراجعة نظرية</span>
+            <ul>
+              <li>if / else if / else وترتيب الشروط الصح</li>
+              <li>الشروط المركّبة باستخدام and / or / not</li>
+              <li>تجنب التكرار وتداخل الشروط اللي مالوش داعي</li>
+            </ul>
+          </div>
+          <div class="diff-head">
+            <span class="total-badge">8 مسائل</span>
+          </div>
+          <div class="diff-row">
+            <div class="diff-chip easy"><span class="n">3</span><span class="lbl2">سهل</span></div>
+            <div class="diff-chip medium"><span class="n">3</span><span class="lbl2">متوسط</span></div>
+            <div class="diff-chip hard"><span class="n">2</span><span class="lbl2">صعب</span></div>
+          </div>
+          <div class="day-foot">
+            <span>الترتيب المقترح: <b>ابدأ بالسهل، وخلّي الصعب آخر حاجة</b></span>
+            <span>الناتج المطلوب: <b>8/8 محلولة + سطرين تشيك-إن</b></span>
+          </div>
+          <div class="links-box">
+            <span class="lbl">روابط اليوم</span>
+            <div class="playlist-row">
+              <span class="ic">🎥</span>
+              <span class="q">بلايليست مراجعة اليوم:</span>
+              <span class="link-slot">ألصق لينك البلايليست هنا</span>
+            </div>
+            <div class="link-groups">
+            <div class="link-group easy">
+              <h4>سهل</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">3</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            <div class="link-group medium">
+              <h4>متوسط</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">3</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            <div class="link-group hard">
+              <h4>صعب</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 3 -->
+      <div class="day" id="day3">
+        <div class="day-card">
+          <div class="day-head">
+            <span class="day-chip">DAY 03</span>
+            <h3>Loops</h3>
+          </div>
+          <p class="day-focus">هدف اليوم: تتحكم في التكرار بدل ما تكرر نفس الكود يدويًا.</p>
+          <div class="theory-box">
+            <span class="lbl">مراجعة نظرية</span>
+            <ul>
+              <li>for مقابل while، ومتى تستخدم كل واحد</li>
+              <li>break و continue وتأثيرهم على تدفق الحلقة</li>
+              <li>الحلقات المتداخلة (Nested Loops) ومتى فعلًا محتاجها</li>
+            </ul>
+          </div>
+          <div class="diff-head">
+            <span class="total-badge">10 مسائل</span>
+          </div>
+          <div class="diff-row">
+            <div class="diff-chip easy"><span class="n">5</span><span class="lbl2">سهل</span></div>
+            <div class="diff-chip medium"><span class="n">3</span><span class="lbl2">متوسط</span></div>
+            <div class="diff-chip hard"><span class="n">2</span><span class="lbl2">صعب</span></div>
+          </div>
+          <div class="day-foot">
+            <span>الترتيب المقترح: <b>ابدأ بالسهل، وخلّي الصعب آخر حاجة</b></span>
+            <span>الناتج المطلوب: <b>10/10 محلولة + سطرين تشيك-إن</b></span>
+          </div>
+          <div class="links-box">
+            <span class="lbl">روابط اليوم</span>
+            <div class="playlist-row">
+              <span class="ic">🎥</span>
+              <span class="q">بلايليست مراجعة اليوم:</span>
+              <span class="link-slot">ألصق لينك البلايليست هنا</span>
+            </div>
+            <div class="link-groups">
+            <div class="link-group easy">
+              <h4>سهل</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">3</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">4</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">5</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            <div class="link-group medium">
+              <h4>متوسط</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">3</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            <div class="link-group hard">
+              <h4>صعب</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 4 -->
+      <div class="day" id="day4">
+        <div class="day-card">
+          <div class="day-head">
+            <span class="day-chip">DAY 04</span>
+            <h3>Functions</h3>
+          </div>
+          <p class="day-focus">هدف اليوم: تقسّم الكود لقطع صغيرة قابلة لإعادة الاستخدام بدل الكتلة الواحدة الطويلة.</p>
+          <div class="theory-box">
+            <span class="lbl">مراجعة نظرية</span>
+            <ul>
+              <li>تعريف الدالة، الـ Parameters، وقيمة الـ Return</li>
+              <li>الفرق بين متغير محلي (Local) ومتغير عام (Global)</li>
+              <li>ليه الدوال بتقلل تكرار الكود وتسهّل تتبع الأخطاء</li>
+            </ul>
+          </div>
+          <div class="diff-head">
+            <span class="total-badge">6 أسئلة</span>
+          </div>
+          <div class="diff-row">
+            <div class="diff-chip easy"><span class="n">2</span><span class="lbl2">سهل</span></div>
+            <div class="diff-chip medium"><span class="n">2</span><span class="lbl2">متوسط</span></div>
+            <div class="diff-chip hard"><span class="n">2</span><span class="lbl2">صعب</span></div>
+          </div>
+          <div class="day-foot">
+            <span>الترتيب المقترح: <b>ابدأ بالسهل، وخلّي الصعب آخر حاجة</b></span>
+            <span>الناتج المطلوب: <b>6/6 محلولة + سطرين تشيك-إن</b></span>
+          </div>
+          <div class="links-box">
+            <span class="lbl">روابط اليوم</span>
+            <div class="playlist-row">
+              <span class="ic">🎥</span>
+              <span class="q">بلايليست مراجعة اليوم:</span>
+              <span class="link-slot">ألصق لينك البلايليست هنا</span>
+            </div>
+            <div class="link-groups">
+            <div class="link-group easy">
+              <h4>سهل</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            <div class="link-group medium">
+              <h4>متوسط</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            <div class="link-group hard">
+              <h4>صعب</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 5 -->
+      <div class="day" id="day5">
+        <div class="day-card">
+          <div class="day-head">
+            <span class="day-chip">DAY 05</span>
+            <h3>Arrays</h3>
+          </div>
+          <p class="day-focus">هدف اليوم: تتحرك جوه المصفوفة بثقة — قراءة، تعديل، وتحليل عناصرها.</p>
+          <div class="theory-box">
+            <span class="lbl">مراجعة نظرية</span>
+            <ul>
+              <li>الوصول للعناصر بالـ Index والتعامل مع حدود المصفوفة</li>
+              <li>عمليات شائعة: إضافة، حذف، بحث عن عنصر، ترتيب</li>
+              <li>الدوران على المصفوفة بـ Loop وربطها بيوم 3</li>
+            </ul>
+          </div>
+          <div class="diff-head">
+            <span class="total-badge">10 مسائل</span>
+          </div>
+          <div class="diff-row">
+            <div class="diff-chip easy"><span class="n">5</span><span class="lbl2">سهل</span></div>
+            <div class="diff-chip medium"><span class="n">3</span><span class="lbl2">متوسط</span></div>
+            <div class="diff-chip hard"><span class="n">2</span><span class="lbl2">صعب</span></div>
+          </div>
+          <div class="day-foot">
+            <span>الترتيب المقترح: <b>ابدأ بالسهل، وخلّي الصعب آخر حاجة</b></span>
+            <span>الناتج المطلوب: <b>10/10 محلولة + سطرين تشيك-إن</b></span>
+          </div>
+          <div class="links-box">
+            <span class="lbl">روابط اليوم</span>
+            <div class="playlist-row">
+              <span class="ic">🎥</span>
+              <span class="q">بلايليست مراجعة اليوم:</span>
+              <span class="link-slot">ألصق لينك البلايليست هنا</span>
+            </div>
+            <div class="link-groups">
+            <div class="link-group easy">
+              <h4>سهل</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">3</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">4</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">5</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            <div class="link-group medium">
+              <h4>متوسط</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">3</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            <div class="link-group hard">
+              <h4>صعب</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY 6 -->
+      <div class="day" id="day6">
+        <div class="day-card">
+          <div class="day-head">
+            <span class="day-chip">DAY 06</span>
+            <h3>Strings</h3>
+          </div>
+          <p class="day-focus">هدف اليوم: تتعامل مع النصوص كبنية بيانات ليها عمليات محددة، مش مجرد كلام.</p>
+          <div class="theory-box">
+            <span class="lbl">مراجعة نظرية</span>
+            <ul>
+              <li>عمليات النصوص: قص (Slicing)، بحث، استبدال، دمج</li>
+              <li>الفرق بين مقارنة النصوص case-sensitive و case-insensitive</li>
+              <li>التعامل مع الـ String كأنه Array of Characters (رابط بيوم 5)</li>
+            </ul>
+          </div>
+          <div class="diff-head">
+            <span class="total-badge">10 مسائل</span>
+          </div>
+          <div class="diff-row">
+            <div class="diff-chip easy"><span class="n">5</span><span class="lbl2">سهل</span></div>
+            <div class="diff-chip medium"><span class="n">3</span><span class="lbl2">متوسط</span></div>
+            <div class="diff-chip hard"><span class="n">2</span><span class="lbl2">صعب</span></div>
+          </div>
+          <div class="day-foot">
+            <span>الترتيب المقترح: <b>ابدأ بالسهل، وخلّي الصعب آخر حاجة</b></span>
+            <span>الناتج المطلوب: <b>10/10 محلولة + سطرين تشيك-إن</b></span>
+          </div>
+          <div class="links-box">
+            <span class="lbl">روابط اليوم</span>
+            <div class="playlist-row">
+              <span class="ic">🎥</span>
+              <span class="q">بلايليست مراجعة اليوم:</span>
+              <span class="link-slot">ألصق لينك البلايليست هنا</span>
+            </div>
+            <div class="link-groups">
+            <div class="link-group easy">
+              <h4>سهل</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">3</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">4</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">5</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            <div class="link-group medium">
+              <h4>متوسط</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">3</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            <div class="link-group hard">
+              <h4>صعب</h4>
+              <ol>
+              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              </ol>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  </section>
+
+  <section id="resources">
+    <div class="sec-head">
+      <span class="tag">where-to-practice</span>
+      <h2>مصادر مقترحة</h2>
+      <p>مش شرط تستخدمهم كلهم، اختار اللي يريحك واستمر عليه طول الأسبوع بدل ما تقفز بين منصات مختلفة.</p>
+    </div>
+    <div class="res-grid">
+      <div class="res-card">
+        <span class="name">Codeforces</span>
+        <p>مسائل مصنّفة بالصعوبة (Rating)، مفيدة خصوصًا للمسائل الصعبة في كل يوم.</p>
+      </div>
+      <div class="res-card">
+        <span class="name">LeetCode — Easy</span>
+        <p>مسائل واضحة الوصف ومصنّفة بالـ Tag والصعوبة، خيار ممتاز للمسائل السهلة والمتوسطة.</p>
+      </div>
+      <div class="res-card">
+        <span class="name">HackerRank</span>
+        <p>مسارات جاهزة تتبع نفس ترتيب اليوم (Arrays, Recursion, Search...) بشكل تدريجي.</p>
+      </div>
+      <div class="res-card">
+        <span class="name">CP-Algorithms</span>
+        <p>مرجع نظري مختصر لأي تقنية محتاج تراجعها بعمق أكتر من ملخص اليوم.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="closing">
+    <div class="closing">
+      <h2>الأسبوع ده نقطة بداية، مش اختبار</h2>
+      <p>
+        مفيش حد متوقع منه يحل كل حاجة صح من أول مرة. الهدف إننا كلنا نوصل لآخر الأسبوع بلغة مشتركة
+        في المنطق والخوارزميات، عشان لما ندخل التراكات المتخصصة، نبدأ من أساس واحد قوي مش متفرق.
+      </p>
+    </div>
+  </section>
+
+</div>
+
+<footer>Problem Solving Sprint — خطة أسبوع واحد لمراجعة الأساسيات</footer>
+
+</body>
+</html>
