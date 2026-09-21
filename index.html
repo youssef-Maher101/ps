@@ -429,6 +429,15 @@
     text-align: right;
     padding: 3px 2px;
   }
+  a.link-slot {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  a.link-slot:hover { border-bottom-color: var(--accent); }
   .link-groups {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -633,32 +642,32 @@
             <div class="playlist-row">
               <span class="ic">🎥</span>
               <span class="q">بلايليست مراجعة اليوم:</span>
-              <span class="link-slot">ألصق لينك البلايليست هنا</span>
+              <a class="link-slot" href="https://youtube.com/playlist?list=PLf8G095WmG60&si=y0c0ZEjhG5j0WCzC" target="_blank" rel="noopener">YouTube Playlist ↗</a>
             </div>
             <div class="link-groups">
             <div class="link-group easy">
               <h4>سهل</h4>
               <ol>
-              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
-              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
-              <li><span class="q">3</span><span class="link-slot">ألصق اللينك هنا</span></li>
-              <li><span class="q">4</span><span class="link-slot">ألصق اللينك هنا</span></li>
-              <li><span class="q">5</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">1</span><a class="link-slot" href="https://codeforces.com/group/1lvPqewYjC/contest/642296/problem/B" target="_blank" rel="noopener">Problem B ↗</a></li>
+              <li><span class="q">2</span><a class="link-slot" href="https://codeforces.com/group/1lvPqewYjC/contest/642296/problem/F" target="_blank" rel="noopener">Problem F ↗</a></li>
+              <li><span class="q">3</span><a class="link-slot" href="https://codeforces.com/group/1lvPqewYjC/contest/642296/problem/D" target="_blank" rel="noopener">Problem D ↗</a></li>
+              <li><span class="q">4</span><a class="link-slot" href="https://codeforces.com/group/MWSDmqGsZm/contest/219158/problem/D" target="_blank" rel="noopener">Problem D ↗</a></li>
+              <li><span class="q">5</span><a class="link-slot" href="https://codeforces.com/group/yuyOVUOzyt/contest/634978/problem/D" target="_blank" rel="noopener">Problem D ↗</a></li>
               </ol>
             </div>
             <div class="link-group medium">
               <h4>متوسط</h4>
               <ol>
-              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
-              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
-              <li><span class="q">3</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">1</span><a class="link-slot" href="https://codeforces.com/group/1lvPqewYjC/contest/642296/problem/L" target="_blank" rel="noopener">Problem L ↗</a></li>
+              <li><span class="q">2</span><a class="link-slot" href="https://codeforces.com/group/1lvPqewYjC/contest/642296/problem/I" target="_blank" rel="noopener">Problem I ↗</a></li>
+              <li><span class="q">3</span><a class="link-slot" href="https://codeforces.com/group/MWSDmqGsZm/contest/219158/problem/Y" target="_blank" rel="noopener">Problem Y ↗</a></li>
               </ol>
             </div>
             <div class="link-group hard">
               <h4>صعب</h4>
               <ol>
-              <li><span class="q">1</span><span class="link-slot">ألصق اللينك هنا</span></li>
-              <li><span class="q">2</span><span class="link-slot">ألصق اللينك هنا</span></li>
+              <li><span class="q">1</span><a class="link-slot" href="https://codeforces.com/group/1lvPqewYjC/contest/642296/problem/N" target="_blank" rel="noopener">Problem N ↗</a></li>
+              <li><span class="q">2</span><a class="link-slot" href="https://codeforces.com/group/MWSDmqGsZm/contest/219158/problem/G" target="_blank" rel="noopener">Problem G ↗</a></li>
               </ol>
             </div>
             </div>
